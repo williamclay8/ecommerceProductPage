@@ -1,0 +1,105 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  /* Scroll snapping for mobile images */
+  .scroll-snap-x {
+    scroll-snap-type: x mandatory;
+  }
+  .scroll-snap-x > * {
+    scroll-snap-align: center;
+  }
+
+  /* Hide scrollbar for mobile images */
+  .scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Disable double-tap-to-zoom on specific elements */
+  .disable-dbl-tap-zoom {
+    touch-action: manipulation;
+  }
+
+  /* Remove up & down arrows on number field - Chrome, Safari, Edge, Opera */
+  input.no-input-arrows::-webkit-outer-spin-button,
+  input.no-input-arrows::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Remove up & down arrows on number field - Firefox */
+  input[type="number"].no-input-arrows {
+    -moz-appearance: textfield;
+  }
+
+  /* Styling radio buttons for desktop thumbnails */
+  input[type="radio"].hidden-radio {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  input[type="radio"].hidden-radio:checked + img {
+    border-color: #ff7e1b;
+  }
+
+  /* Close lightbox button - needs to be orange on hover etc, easiest way to do this is swap out images AFAIK */
+  button.bg-close {
+    background-image: url("./images/icon-close-white.svg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+  }
+  button.bg-close:active,
+  button.bg-close:focus,
+  button.bg-close:focus-within,
+  button.bg-close:hover {
+    background-image: url("./images/icon-close-orange.svg");
+  }
+
+  /* max-width for lightbox main image - max-width: min(...) to avoid absolute-positioned arrows going offscreen */
+  .minmax-width {
+    /* between 28rem (max-w-md) and 85vw */
+    max-width: min(28rem, 85vw);
+  }
+}
+
+@layer components {
+  .plus-minus {
+    @apply absolute p-10 flex justify-center items-center top-1/2 transform -translate-y-1/2 disable-dbl-tap-zoom;
+  }
+  .plus-minus:active svg path {
+    @apply fill-orange;
+  }
+  .cart:active svg path,
+  .cart:hover svg path {
+    @apply fill-black;
+  }
+  .orange-button {
+    @apply text-white font-bold bg-orange rounded-lg p-5 w-full flex items-center gap-4 disable-dbl-tap-zoom transform active:bg-orange-active;
+  }
+  .next-previous {
+    @apply h-10 w-10 flex justify-center items-center rounded-full bg-white absolute top-1/2 transform -translate-y-1/2 disable-dbl-tap-zoom;
+  }
+  .next-previous:active svg path,
+  .next-previous:hover svg path {
+    @apply stroke-current text-orange;
+  }
+  .mobile-nav-link {
+    @apply font-bold text-lg text-black;
+  }
+  .desktop-nav-link {
+    @apply text-gray-dark pb-8 pt-4 border-b-4 border-transparent;
+  }
+  .desktop-nav-link:focus,
+  .desktop-nav-link:focus-within,
+  .desktop-nav-link:hover {
+    @apply border-orange;
+  }
+  .desktop-thumbnail {
+    @apply rounded-xl border-2 border-transparent overflow-hidden hover:bg-white hover:bg-opacity-60;
+  }
+  .desktop-thumbnail.active {
+    @apply border-orange border-2 bg-white bg-opacity-60;
+  }
+}
